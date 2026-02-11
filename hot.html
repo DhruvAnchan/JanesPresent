@@ -90,7 +90,7 @@ const gallery = document.getElementById("gallery");
 
 mediaFiles.forEach(file => {
   const extension = file.split('.').pop().toLowerCase();
-  const path = "./images/hot/" + file;
+  const path = "images/hot/" + file;
 
   if (["mp4"].includes(extension)) {
     const video = document.createElement("video");
