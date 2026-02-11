@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Hey Bubbu</title>
+
+<style>
+  body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+
+  /* Proper tiled pattern */
+  background-image: url('images/background.jpg');
+  background-repeat: repeat;
+  background-size: auto;
+
+  padding: 40px 20px;
+}
+
+/* Optional soft overlay for readability */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  z-index: -1;
+}
+
+h1 {
+  background: #7b1fa2;
+  color: white;
+  padding: 20px 40px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 900px;
+}
+
+.card {
+  display: block;
+  text-decoration: none;
+
+  /* Soft glass effect */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+
+  border-radius: 20px;
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: #4b0082;
+
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card.completed {
+  background: rgba(123, 31, 162, 0.85);
+  color: white;
+}
+
+.card.locked {
+  background: rgba(255, 255, 255, 0.5);
+  color: #888;
+  pointer-events: none;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Hey Bubbu</h1>
+
+<div class="grid">
+  <a href="hot.html" class="card" data-id="hot">Feeling Hot? 🥵</a>
+  <a href="autism.html" class="card" data-id="allowed">Only autistic people allowed 🫣</a>
+  <a href="cute.html" class="card" data-id="cuties">Cuties Only 🎀</a>
+  <a href="camera.html" class="card" data-id="camera">Camera? 😳</a>
+  <a href="dogs.html" class="card" data-id="doggie">🐾 Doggie Lover Section 🐶</a>
+
+  <a href="secret.html" class="card locked" id="secret">Secret Link 🔒</a>
+</div>
+
+<script>
+const requiredCards = document.querySelectorAll(".card[data-id]");
+const secret = document.getElementById("secret");
+
+let visited = JSON.parse(localStorage.getItem("visited")) || {};
+
+// Mark completed visually
+requiredCards.forEach(card => {
+  const id = card.dataset.id;
+
+  if (visited[id]) {
+    card.classList.add("completed");
+  }
+
+  card.addEventListener("click", () => {
+    visited[id] = true;
+    localStorage.setItem("visited", JSON.stringify(visited));
+  });
+});
+
+// Check unlock condition
+function checkUnlock() {
+  const allDone = [...requiredCards].every(card =>
+    visited[card.dataset.id]
+  );
+
+  if (allDone) {
+    secret.classList.remove("locked");
+    secret.textContent = "Secret Link 💖";
+  }
+}
+
+checkUnlock();
+</script>
+
+</body>
+</html>

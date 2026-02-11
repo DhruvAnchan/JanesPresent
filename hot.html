@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stunner</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: #521811;
+    color: white;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 25px;
+    background: #740A03;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    }
+
+    .nav-left .back {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    }
+
+    .nav-title {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    flex: 1;
+    }
+
+
+  h1 {
+    text-align: center;
+    background-color: #B500B2;
+    padding: 20px 0;
+    display: inline;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    padding: 20px;
+  }
+  
+  .gallery img,
+  .gallery video {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: black;
+  }
+  video {
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" class="back">← Back</a>
+  </div>
+  <div class="nav-title">
+    Very hot this gal 🌶️
+  </div>
+</nav>
+
+<div class="gallery" id="gallery"></div>
+
+<script>
+const mediaFiles = [
+"1.mp4",  
+"2.mp4",
+"3.mp4",
+"4.mp4",
+"5.mp4"
+];
+
+const gallery = document.getElementById("gallery");
+
+mediaFiles.forEach(file => {
+  const extension = file.split('.').pop().toLowerCase();
+  const path = "images/hot/" + file;
+
+  if (["mp4"].includes(extension)) {
+    const video = document.createElement("video");
+    video.src = path;
+    video.controls = true;
+    video.preload = "metadata";
+    gallery.appendChild(video);
+  } else {
+    const img = document.createElement("img");
+    img.src = path;
+    img.loading = "lazy";
+    gallery.appendChild(img);
+  }
+});
+</script>
+</body>
+
+</html>
